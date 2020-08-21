@@ -1,9 +1,5 @@
 package com.cartoes.api.entities;
-
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,14 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="transacao")
+@Table(name = "transacao")
 public class Transacao {
 
 	@Id
@@ -36,15 +32,14 @@ public class Transacao {
 
 	@Column(name = "qdt_Parcelas", nullable = false)
 	private int qdtParcelas;
-	
-	@Column(name= "juros", nullable = false)
-	private Double juros;
 
+	@Column(name = "juros", nullable = false)
+	private Double juros;
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Cartao cartao;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -82,7 +77,7 @@ public class Transacao {
 	}
 
 	public void setQtdParcelas(int qdtParcelas) {
-		this.qdtParcelas= qdtParcelas;
+		this.qdtParcelas = qdtParcelas;
 	}
 
 	public Double getJuros() {
@@ -92,7 +87,7 @@ public class Transacao {
 	public void setJuros(Double juros) {
 		this.juros = juros;
 	}
-	
+
 	public Cartao getCartao() {
 		return cartao;
 	}
@@ -101,4 +96,21 @@ public class Transacao {
 		this.cartao = cartao;
 	}
 	
+	@PreUpdate
+	public void preUpdate() {
+		dataTransacao = new Date();
+	}
+
+	@PrePersist
+	public void prePersist() {
+		dataTransacao = new Date();
+	}
+	
+	@Override
+    public String toString() {
+        return "Transacao[" + "id=" + id + "," + "dataTransacao=" + dataTransacao + "," + "cnpj=" + cnpj + ","
+                + "valor=" + valor + "," + "qdtParcelas=" + qdtParcelas + "," + "juros=" + juros + ","
+                + "cartao=" + cartao + "]";
+    }
+
 }
