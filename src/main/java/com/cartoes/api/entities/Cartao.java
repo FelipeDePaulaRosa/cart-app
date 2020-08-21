@@ -113,6 +113,7 @@ public class Cartao implements Serializable {
 		dataAtualizacao = new Date();
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Cartao[" + "id=" + id + "," + "numero=" + numero + "," + "dataValidade=" + dataValidade + ","
