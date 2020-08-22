@@ -20,7 +20,7 @@ public class TransacaoService {
 	@Autowired
 	private TransacaoRepository transacaoRepository;
 	/*Verificar as STRINGS corretamente*/
-	public Optional<List<Transacao>> buscarTransacao(int cartaoId) throws ConsistenciaException {
+	public Optional<List<Transacao>> buscarTransacoes(int cartaoId) throws ConsistenciaException {
         log.info("Service: buscando as transacoes do cartao: {}", cartaoId);
         Optional<List<Transacao>> transacao = Optional.ofNullable(transacaoRepository.findByCartaoId(cartaoId));
         if (!transacao.isPresent()) {
