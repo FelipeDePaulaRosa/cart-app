@@ -19,12 +19,11 @@ public class TransacaoService {
 
 	@Autowired
 	private TransacaoRepository transacaoRepository;
-	/*Verificar as STRINGS corretamente*/
 	public Optional<List<Transacao>> buscarTransacoes(int cartaoId) throws ConsistenciaException {
         log.info("Service: buscando as transacoes do cartao: {}", cartaoId);
         Optional<List<Transacao>> transacao = Optional.ofNullable(transacaoRepository.findByCartaoId(cartaoId));
         if (!transacao.isPresent()) {
-            log.info("Service: Nenhuma cartão com id: {} foi encontrado", cartaoId);
+            log.info("Service: Nenhum cartão com id: {} foi encontrado", cartaoId);
             throw new ConsistenciaException("Nenhuma transacao com o idCartao: {} foi encontrado", cartaoId);
         }
         return transacao;
@@ -33,6 +32,7 @@ public class TransacaoService {
 	public Transacao salvar(Transacao transacao) throws ConsistenciaException {
 		log.info("Service: salvando o cartao: {}", transacao);
 		try {
+			
 			return transacaoRepository.save(transacao);
 		} catch (DataIntegrityViolationException e) {
 			log.info("Service: Já existe um cartão de número {} cadastrado CORRGIR EXCESSAO");
@@ -41,4 +41,4 @@ public class TransacaoService {
 		}
 	}
 	
-}	
+}

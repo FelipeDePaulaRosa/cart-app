@@ -110,7 +110,7 @@ public class Transacao {
     public String toString() {
         return "Transacao[" + "id=" + id + "," + "dataTransacao=" + dataTransacao + "," + "cnpj=" + cnpj + ","
                 + "valor=" + valor + "," + "qdtParcelas=" + qdtParcelas + "," + "juros=" + juros + ","
-                + "cartao=" + cartao + "]";
+                + "cartao=" + cartao.getNumero() + "]";
     }
 
 }

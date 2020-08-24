@@ -48,7 +48,6 @@ public class TransacaoController {
     public ResponseEntity<Transacao> salvar(@RequestBody Transacao transacao) {
         try {
             log.info("Controller: salvando a transação: {}", transacao.toString());
-
             return ResponseEntity.ok(this.transacaoService.salvar(transacao));
         } catch (ConsistenciaException e) {
             log.info("Controller: Inconsistência de dados: {}", e.getMessage());
