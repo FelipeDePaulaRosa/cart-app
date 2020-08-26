@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.cartoes.api.entities.Cartao;
 import com.cartoes.api.entities.Transacao;
 
 @RunWith(SpringRunner.class)
@@ -26,6 +26,8 @@ class TransacaoRepositoryTest {
 	private TransacaoRepository transacaoRepository;  
 	
 	private Transacao transacaoTeste;
+	
+	private Cartao cartaoTeste;
 	
 	private void CriarTransacaoTestes() throws ParseException {
 		
@@ -56,8 +58,8 @@ class TransacaoRepositoryTest {
 	@Test
 	public void testFindByCartaoId() {	
 		
-		List<Transacao> transacao = transacaoRepository.findByCartaoId(transacaoTeste.getCartao().getId());
-		assertEquals(transacaoTeste.getCartao().getId(), ((Transacao) transacao).getCartao().getId());
+		Cartao cartao = (Cartao) transacaoRepository.findByCartaoId(cartaoTeste.getId());
+		assertEquals(cartaoTeste.getId(), cartao.getId());
 		
 	}
 	
