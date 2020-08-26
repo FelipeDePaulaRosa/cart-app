@@ -53,7 +53,7 @@ class TransacaoRepositoryTest {
 	}
 	
 	@Test
-	public void findByCartaoId() {	
+	public void testFindByCartaoId() {	
 		
 		Transacao transacao = (Transacao) transacaoRepository.findByCartaoId(transacaoTeste.getCartao().getId());
 		assertEquals(transacaoTeste.getCartao().getId(), transacao.getCartao().getId());
