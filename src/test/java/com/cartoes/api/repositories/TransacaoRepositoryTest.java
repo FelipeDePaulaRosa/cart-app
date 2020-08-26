@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -58,17 +59,15 @@ class TransacaoRepositoryTest {
 	@Test
 	public void testFindByCartaoId() {	
 		
-		Cartao cartao = (Cartao) transacaoRepository.findByCartaoId(cartaoTeste.getId());
-		assertEquals(cartaoTeste.getId(), cartao.getId());
+		List<Transacao> transacoes = transacaoRepository.findByCartaoId(transacaoTeste.getCartao().getId());
+		assertEquals(cartaoTeste.getId(), transacoes.get(0));
 		
 	}
 	
 	/*@Test
 	public void testFindByNumero() {
 		
-		Transacao transacao = transacaoRepository.findByNumero(transacaoTeste.getCartao().getNumero());
-		assertEquals(transacaoTeste.getCartao().getNumero(), transacao.getCartao().getNumero());
-		
+	
 	}*/
 	
 }
