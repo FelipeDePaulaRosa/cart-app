@@ -1,6 +1,7 @@
 package com.cartoes.api.repositories;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,13 @@ class TransacaoRepositoryTest {
 	public void testFindByCartaoId() {	
 		
 		List<Transacao> transacoes = transacaoRepository.findByCartaoId(transacaoTeste.getCartao().getId());
-		assertEquals(cartaoTeste.getId(), transacoes.get(0));
+		
+		if (transacoes.size() != 1) {
+			fail();
+		}
+		
+		Transacao transacao = transacoes.get(0);
+		assertEquals(transacaoTeste.getCartao().getId(), transacao.getCartao().getId());
 		
 	}
 	
