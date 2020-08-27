@@ -98,13 +98,13 @@ class TransacaoRepositoryTest {
 		
 	}
 	
-	/*@Test
-	public void testFindByCartaoId() {	
+	@Test
+	public void findByCartaoId() {	
 		
 		List<Transacao> transacoes = transacaoRepository.findByCartaoId(transacaoTeste.getCartao().getId());
 		Transacao transacao = transacoes.get(0);
 		assertEquals(transacao.getCartao().getId(), transacaoTeste.getCartao().getId());
-	}*/
+	}
 	
 	/*@Test
 	public void testFindByNumero() {
