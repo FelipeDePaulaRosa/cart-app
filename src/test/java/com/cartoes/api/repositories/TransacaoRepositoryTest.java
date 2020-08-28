@@ -56,7 +56,7 @@ class TransacaoRepositoryTest {
 		cartaoTeste.setDataValidade(new SimpleDateFormat("dd/MM/yyyy").parse("01/12/2020"));
 		cartaoTeste.setBloqueado(false);;
 		cartaoTeste.setDataAtualizacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2020"));
-		cartaoTeste.setCliente(clienteRepository.findByCpf("05887098082"));
+		cartaoTeste.setCliente(clienteTeste);;
 
 		}
 
@@ -64,7 +64,7 @@ class TransacaoRepositoryTest {
 	private TransacaoRepository transacaoRepository;  
 	
 	private Transacao transacaoTeste;
-	
+
 	private void CriarTransacaoTestes() throws ParseException {
 		
 		transacaoTeste = new Transacao();
@@ -75,7 +75,7 @@ class TransacaoRepositoryTest {
 		transacaoTeste.setQtdParcelas(3);
 		transacaoTeste.setValor(120.00);
 		transacaoTeste.setJuros(10.00);
-
+		transacaoTeste.setCartao(cartaoTeste);
 		}
 	
 	@Before
@@ -98,13 +98,11 @@ class TransacaoRepositoryTest {
 		
 	}
 	
-	@Test
+	/*@Test
 	public void findByCartaoId() {	
 		
-		List<Transacao> transacoes = transacaoRepository.findByCartaoId(transacaoTeste.getCartao().getId());
-		Transacao transacao = transacoes.get(0);
-		assertEquals(transacao.getCartao().getId(), transacaoTeste.getCartao().getId());
-	}
+		
+	}*/
 	
 	/*@Test
 	public void testFindByNumero() {

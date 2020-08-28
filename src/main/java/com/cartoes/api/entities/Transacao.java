@@ -1,4 +1,5 @@
 package com.cartoes.api.entities;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +15,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "transacao")
-public class Transacao {
+@Table(name = "Transacao")
+public class Transacao implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,13 +29,13 @@ public class Transacao {
 	private String cnpj;
 
 	@Column(name = "valor", nullable = false)
-	private Double valor;
+	private double valor;
 
 	@Column(name = "qdt_Parcelas", nullable = false)
 	private int qdtParcelas;
 
 	@Column(name = "juros", nullable = false)
-	private Double juros;
+	private double juros;
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -64,11 +65,11 @@ public class Transacao {
 		this.cnpj = cnpj;
 	}
 
-	public Double getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
@@ -80,11 +81,11 @@ public class Transacao {
 		this.qdtParcelas = qdtParcelas;
 	}
 
-	public Double getJuros() {
+	public double getJuros() {
 		return juros;
 	}
 
-	public void setJuros(Double juros) {
+	public void setJuros(double juros) {
 		this.juros = juros;
 	}
 

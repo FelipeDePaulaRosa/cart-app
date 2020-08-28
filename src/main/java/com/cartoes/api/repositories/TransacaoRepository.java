@@ -1,19 +1,19 @@
 package com.cartoes.api.repositories;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cartoes.api.entities.Cartao;
 import com.cartoes.api.entities.Transacao;
 
 @Transactional(readOnly = true)
-	public interface TransacaoRepository extends JpaRepository<Transacao, Integer> {
-		@Query("SELECT ta FROM Transacao ta WHERE ta.cartao.id = :cartaoId")
-		List<Transacao> findByCartaoId(@Param("cartaoId") int cartaoId);
-		
-		@Query("SELECT ta FROM Transacao ta WHERE ta.cartao.numero = :numero")
-		List<Transacao> findByNumero(@Param("numero") Cartao cartao);
-	}
+public interface TransacaoRepository extends JpaRepository<Transacao, Integer> {
+	
+		@Query("SELECT ta FROM Transacao ta WHERE ta.cartao.numero = :numeroCartao")
+		Optional<List<Transacao>> findByNumeroCartao(@Param("numeroCartao") String numeroCartao);
+	
+}
