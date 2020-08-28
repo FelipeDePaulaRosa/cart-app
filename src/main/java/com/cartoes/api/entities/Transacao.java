@@ -1,5 +1,4 @@
 package com.cartoes.api.entities;
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "Transacao")
-public class Transacao implements Serializable {
+public class Transacao{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -111,7 +110,7 @@ public class Transacao implements Serializable {
     public String toString() {
         return "Transacao[" + "id=" + id + "," + "dataTransacao=" + dataTransacao + "," + "cnpj=" + cnpj + ","
                 + "valor=" + valor + "," + "qdtParcelas=" + qdtParcelas + "," + "juros=" + juros + ","
-                + "cartao=" + cartao.getNumero() + "]";
+                + "cartao=" + cartao + "]";
     }
 
 }
