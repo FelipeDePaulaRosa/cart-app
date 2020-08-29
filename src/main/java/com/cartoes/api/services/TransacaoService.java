@@ -26,6 +26,7 @@ public class TransacaoService {
 	
 	
 	public Optional<List<Transacao>> buscarPorNumeroCartao(String numeroCartao) throws ConsistenciaException{
+		
 		log.info("Service buscando as transações do cartão de numero: {}", numeroCartao);
 		
 		Optional<List<Transacao>> transacoes = transacaoRepository.findByNumeroCartao(numeroCartao);
@@ -44,7 +45,7 @@ public class TransacaoService {
 	public Transacao salvar(Transacao transacao) throws ConsistenciaException {
 		log.info("Service: salvando o cartao: {}", transacao);
 		
-		Optional<Cartao> cartao = cartaoRepository.findByNymero(transacao.getCartao().getNumero());
+		Optional<Cartao> cartao = cartaoRepository.findByNumero(transacao.getCartao().getNumero());
 		
 		if (!cartao.isPresent()) {
 			log.info("Service: Nenhum cartao com id: {} foi encontrado", transacao.getCartao().getId());
