@@ -23,7 +23,7 @@ import com.cartoes.api.entities.Cliente;
 @SpringBootTest
 @ActiveProfiles("test")
 public class ClienteRepositoryTest {
-
+	
 	@Autowired
 	private ClienteRepository clienteRepository;  
 	

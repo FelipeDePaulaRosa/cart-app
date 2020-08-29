@@ -1,5 +1,6 @@
 package com.cartoes.api.repositories;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
@@ -23,86 +24,98 @@ import com.cartoes.api.entities.Transacao;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-class TransacaoRepositoryTest {
+public class TransacaoRepositoryTest {
 
+//Criacao da Transação
+	
 	@Autowired
-	private ClienteRepository clienteRepository;
-
+	private TransacaoRepository transacaoRepository;  
+	
+	private Transacao transacaoTeste;	
+	
+	private void CriarTransacaoTestes() throws ParseException {
+		
+		transacaoTeste = new Transacao();
+		
+		transacaoTeste.setDataTransacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2020"));
+		transacaoTeste.setCnpj("18808626000194");
+		transacaoTeste.setValor(1500.00);
+		transacaoTeste.setQdtParcelas(3);
+		transacaoTeste.setJuros(0.05);
+		transacaoTeste.setCartao(cartaoTeste);
+		
+	}
+//Finalização da transacao.
+	
+//Criacao do Cliente
+	@Autowired
 	private Cliente clienteTeste;
-
+	
+	private ClienteRepository clienteRepository;
+	
 	private void CriarClienteTestes() throws ParseException {
-
+		
 		clienteTeste = new Cliente();
-
+		
 		clienteTeste.setNome("Nome Teste");
 		clienteTeste.setCpf("05887098082");
 		clienteTeste.setUf("CE");
 		clienteTeste.setDataAtualizacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2020"));
-
+		
 	}
+	
+//Finalização do Cliente.
 
+//Criacao do Cartão
 	@Autowired
-	private CartaoRepository cartaoRepository;
-
 	private Cartao cartaoTeste;
-
+	
+	private CartaoRepository cartaoRepository;
+	
 	private void CriarCartaoTestes() throws ParseException {
-
+		
 		cartaoTeste = new Cartao();
-
+		
 		cartaoTeste.setNumero("1230981203");
-		cartaoTeste.setDataValidade(new SimpleDateFormat("dd/MM/yyyy").parse("01/12/2020"));
-		cartaoTeste.setBloqueado(false);
-		;
-		cartaoTeste.setDataAtualizacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2020"));
-		cartaoTeste.setCliente(clienteTeste);
-
+        cartaoTeste.setDataValidade(new SimpleDateFormat("dd/MM/yyyy").parse("01/12/2020"));
+        cartaoTeste.setBloqueado(false);
+        cartaoTeste.setDataAtualizacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2020"));
+        cartaoTeste.setCliente(clienteTeste);
+		
 	}
-
-	@Autowired
-	private TransacaoRepository transacaoRepository;
-
-	private Transacao transacaoTeste;
-
-	private void CriarTransacaoTestes() throws ParseException {
-
-		transacaoTeste = new Transacao();
-
-		transacaoTeste.setDataTransacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2020"));
-		transacaoTeste.setCnpj("05887098082");
-		transacaoTeste.setQtdParcelas(3);
-		transacaoTeste.setValor(120.00);
-		transacaoTeste.setJuros(10.00);
-		transacaoTeste.setCartao(cartaoTeste);
-	}
-
+	
+//Finalização do Cartão
+	
 	@Before
 	public void setUp() throws Exception {
-
-		CriarClienteTestes();
-		clienteRepository.save(clienteTeste);
-
-		CriarCartaoTestes();
-		cartaoRepository.save(cartaoTeste);
-
+		
 		CriarTransacaoTestes();
 		transacaoRepository.save(transacaoTeste);
+		
+		CriarClienteTestes();
+		clienteRepository.save(clienteTeste);
+		
+		CriarCartaoTestes();
+		cartaoRepository.save(cartaoTeste);
+		
 	}
-
-	@After
-	public void tearDown() throws Exception {
-
-		transacaoRepository.deleteAll();
-
-	}
-
+	
 	@Test
-	public void testFindByNumeroCartao() {
+    public void testFindByNumeroCartao() {
 
 		Optional<List<Transacao>> transacoes = transacaoRepository.findByNumeroCartao(transacaoTeste.getCartao().getNumero());
 		Transacao transacao = (Transacao) transacoes.get();
 		
-		assertTrue(transacaoTeste.getCartao().getNumero().equals(transacao.getCartao().getNumero()));	
+		assertTrue(transacaoTeste.getCartao().getNumero().equals(transacao.getCartao().getNumero()));
 
+    }
+
+	@After
+	public void tearDown() throws Exception {
+		
+		transacaoRepository.deleteAll();
+		clienteRepository.deleteAll();
+		cartaoRepository.deleteAll();
+		
 	}
 }

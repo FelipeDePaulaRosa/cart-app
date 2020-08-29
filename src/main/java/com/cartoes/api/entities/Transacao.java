@@ -78,7 +78,7 @@ public class Transacao implements Serializable{
 		return qdtParcelas;
 	}
 
-	public void setQtdParcelas(int qdtParcelas) {
+	public void setQdtParcelas(int qdtParcelas) {
 		this.qdtParcelas = qdtParcelas;
 	}
 
