@@ -100,7 +100,7 @@ public class TransacaoRepositoryTest {
 		
 	}
 	
-	@Test
+	/*@Test
     public void testFindByNumeroCartao() {
 
 		Optional<List<Transacao>> transacoes = transacaoRepository.findByNumeroCartao(transacaoTeste.getCartao().getNumero());
@@ -108,7 +108,7 @@ public class TransacaoRepositoryTest {
 		
 		assertTrue(transacaoTeste.getCartao().getNumero().equals(transacao.getCartao().getNumero()));
 
-    }
+    }*/
 
 	@After
 	public void tearDown() throws Exception {
