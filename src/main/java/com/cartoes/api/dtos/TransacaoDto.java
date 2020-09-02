@@ -26,8 +26,8 @@ public class TransacaoDto {
 	@NotEmpty(message = "Juros não pode ser vazio.")
 	private String juros;
 	
-	@NotEmpty(message = "O ID do cartao não pode ser vazio.")
-	private String cartaoId;
+	@NotEmpty(message = "O Numero do cartao não pode ser vazio.")
+	private String cartaoNumero;
 	
 	public String getId() {
 		return id;
@@ -77,18 +77,18 @@ public class TransacaoDto {
 		this.juros = juros;
 	}
 	
-	public String getCartaoId() {
-		return cartaoId;
+	public String getCartaoNumero() {
+		return cartaoNumero;
 	}
 	
-	public void setCartaoId(String cartaoId) {
-		this.cartaoId = cartaoId;
+	public void setCartaoNumero(String cartaoNumero) {
+		this.cartaoNumero = cartaoNumero;
 	}
 
 	@Override
 	public String toString() {
 		return "Transacao[" + "id=" + id + "," + "dataTransacao=" + dataTransacao + "," + "cnpj=" + cnpj + ","
-				+ "valor=" + valor + "," + "qdtParcelas=" + qdtParcelas + "," + "juros=" + juros + "," + "cartaoId="
-				+ cartaoId + "]";
+				+ "valor=" + valor + "," + "qdtParcelas=" + qdtParcelas + "," + "juros=" + juros + "," + "cartaoNumero="
+				+ cartaoNumero + "]";
 	}
 }

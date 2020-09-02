@@ -73,7 +73,7 @@ public class ConversaoUtils {
 		transacao.setJuros(Double.parseDouble(transacaoDto.getJuros()));
 		
 		Cartao cartao = new Cartao();
-		cartao.setId(Integer.parseInt(transacaoDto.getCartaoId()));
+		cartao.setNumero(transacaoDto.getCartaoNumero());
 		transacao.setCartao(cartao);
 		return transacao;
 	}
@@ -86,6 +86,7 @@ public class ConversaoUtils {
 		transacaoDto.setValor(String.valueOf(transacao.getValor()));
 		transacaoDto.setQdtParcelas(String.valueOf(transacao.getQdtParcelas()));
 		transacaoDto.setJuros(String.valueOf(transacao.getJuros()));
+		transacaoDto.setCartaoNumero(transacao.getCartao().getNumero());
 		return transacaoDto;
 	}
 
