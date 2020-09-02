@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.cartoes.api.dtos.CartaoDto;
 import com.cartoes.api.entities.Cartao;
 import com.cartoes.api.services.CartaoService;
 import com.cartoes.api.utils.ConsistenciaException;
+import com.cartoes.api.utils.ConversaoUtils;
 import com.cartoes.api.response.Response;
 
 @RestController
 @RequestMapping("/api/cartao")
 @CrossOrigin(origins = "*")
 public class CartaoController {
-	private static final Logger log = LoggerFactory.getLogger(CartaoController.class);
+	private static final Logger log = LoggerFactory.getLogger(ClienteController.class);
 	@Autowired
 	private CartaoService cartaoService;
 
@@ -31,15 +33,15 @@ public class CartaoController {
 	 * Retorna os cartões do informado no parâmetro
 	 *
 	 * @param Id do cliente a ser consultado
-	 * @return Lista de cartões que o cliente possui
+	 * @return Lista de cartões que o cliente possui 89
 	 */
 	@GetMapping(value = "/cliente/{clienteId}")
-	public ResponseEntity<Response<List<Cartao>>> buscarPorClienteId(@PathVariable("clienteId") int clienteId) {
-		Response<List<Cartao>> response = new Response<List<Cartao>>();
+	public ResponseEntity<Response<List<CartaoDto>>> buscarPorClienteId(@PathVariable("clienteId") int clienteId) {
+		Response<List<CartaoDto>> response = new Response<List<CartaoDto>>();
 		try {
 			log.info("Controller: buscando cartões do cliente de ID: {}", clienteId);
 			Optional<List<Cartao>> listaCartoes = cartaoService.buscarPorClienteId(clienteId);
-			response.setDados(listaCartoes.get());
+			response.setDados(ConversaoUtils.ConverterLista(listaCartoes.get()));
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
@@ -58,12 +60,14 @@ public class CartaoController {
 	 * @param Dados de entrada do cartao
 	 * @return Dados do cartao persistido
 	 */
+	
 	@PostMapping
-	public ResponseEntity<Response<Cartao>> salvar(@RequestBody Cartao cartao) {
-		Response<Cartao> response = new Response<Cartao>();
+	public ResponseEntity<Response<CartaoDto>> salvar(@RequestBody CartaoDto cartaoDto) {
+		Response<CartaoDto> response = new Response<CartaoDto>();
 		try {
-			log.info("Controller: salvando o cartao: {}", cartao.toString());
-			response.setDados(this.cartaoService.salvar(cartao));
+			log.info("Controller: salvando o cartao: {}", cartaoDto.toString());
+			Cartao cartao = this.cartaoService.salvar(ConversaoUtils.Converter(cartaoDto));
+			response.setDados(ConversaoUtils.Converter(cartao));
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
