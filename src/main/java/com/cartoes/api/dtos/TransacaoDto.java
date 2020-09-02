@@ -16,13 +16,16 @@ public class TransacaoDto {
 	@Length(min = 14, max = 14, message = "CNPJ deve conter 14 caracteres.")
 	@CNPJ(message = "CNPJ inválido.")
 	private String cnpj;
-
+		
+	@Length(max = 10, message = "Valor não deve ultrapassar 10 digitos.")
 	@NotEmpty(message = "Valor não pode ser vazio.")
 	private String valor;
 
+	@Length(max = 2, message = "Quantidade de Parcelas não deve ter mais que 2 digitos.")
 	@NotEmpty(message = "Quantidade de Parcelas não pode ser vazio.")
 	private String qdtParcelas;
 	
+	@Length(max = 4, message = "Juros não deve ter mais que 4 digitos.")
 	@NotEmpty(message = "Juros não pode ser vazio.")
 	private String juros;
 	
