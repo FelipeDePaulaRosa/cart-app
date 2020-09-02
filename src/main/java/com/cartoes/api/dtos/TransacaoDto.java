@@ -41,7 +41,7 @@ public class TransacaoDto {
 		return dataTransacao;
 	}
 
-	public void DataTransacao(String dataTransacao) {
+	public void setDataTransacao(String dataTransacao) {
 		this.dataTransacao = dataTransacao;
 	}
 

@@ -45,7 +45,7 @@ public class CartaoController {
 		try {
 			log.info("Controller: buscando cartões do cliente de ID: {}", clienteId);
 			Optional<List<Cartao>> listaCartoes = cartaoService.buscarPorClienteId(clienteId);
-			response.setDados(ConversaoUtils.ConverterLista(listaCartoes.get()));
+			response.setDados(ConversaoUtils.ConverterListaCartao(listaCartoes.get()));
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());

@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.cartoes.api.dtos.CartaoDto;
 import com.cartoes.api.dtos.ClienteDto;
+import com.cartoes.api.dtos.TransacaoDto;
 import com.cartoes.api.entities.Cartao;
 import com.cartoes.api.entities.Cliente;
+import com.cartoes.api.entities.Transacao;
 
 public class ConversaoUtils {
 	public static Cartao Converter(CartaoDto cartaoDto) throws ParseException {
@@ -33,7 +35,7 @@ public class ConversaoUtils {
 		return cartaoDto;
 	}
 
-	public static List<CartaoDto> ConverterLista(List<Cartao> lista) {
+	public static List<CartaoDto> ConverterListaCartao(List<Cartao> lista) {
 		List<CartaoDto> lst = new ArrayList<CartaoDto>(lista.size());
 		for (Cartao cartao : lista) {
 			lst.add(Converter(cartao));
@@ -58,5 +60,40 @@ public class ConversaoUtils {
 		clienteDto.setCpf(cliente.getCpf());
 		clienteDto.setUf(cliente.getUf());
 		return clienteDto;
+	}
+	
+	public static Transacao Converter(TransacaoDto transacaoDto) throws ParseException {
+		Transacao transacao = new Transacao();
+		if (transacaoDto.getId() != null && transacaoDto.getId() != "")
+			transacao.setId(Integer.parseInt(transacaoDto.getId()));
+		transacao.setCnpj(transacaoDto.getCnpj());
+		transacao.setDataTransacao(new SimpleDateFormat("dd/MM/yyyy").parse(transacaoDto.getDataTransacao()));
+		transacao.setValor(Double.parseDouble(transacaoDto.getValor()));
+		transacao.setQdtParcelas(Integer.parseInt(transacaoDto.getQdtParcelas()));
+		transacao.setJuros(Double.parseDouble(transacaoDto.getJuros()));
+		
+		Cartao cartao = new Cartao();
+		cartao.setId(Integer.parseInt(transacaoDto.getCartaoId()));
+		transacao.setCartao(cartao);
+		return transacao;
+	}
+
+	public static TransacaoDto Converter(Transacao transacao) {
+		TransacaoDto transacaoDto = new TransacaoDto();
+		transacaoDto.setId(String.valueOf(transacao.getId()));
+		transacaoDto.setCnpj(transacao.getCnpj());
+		transacaoDto.setDataTransacao(transacao.getDataTransacao().toString());
+		transacaoDto.setValor(String.valueOf(transacao.getValor()));
+		transacaoDto.setQdtParcelas(String.valueOf(transacao.getQdtParcelas()));
+		transacaoDto.setJuros(String.valueOf(transacao.getJuros()));
+		return transacaoDto;
+	}
+
+	public static List<TransacaoDto> ConverterListaTransacao(List<Transacao> lista) {
+		List<TransacaoDto> lst = new ArrayList<TransacaoDto>(lista.size());
+		for (Transacao transacao : lista) {
+			lst.add(Converter(transacao));
+		}
+		return lst;
 	}
 }
