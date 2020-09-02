@@ -77,7 +77,7 @@
 			<artifactId>flyway-core</artifactId>
 			<version>5.2.4</version>
 		</dependency>
-			
+
 		<!-- Teste JUnti -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -85,6 +85,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Hibernate validator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

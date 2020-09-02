@@ -1,10 +1,12 @@
 package com.cartoes.api.controllers;
 
 import java.util.Optional;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,11 +85,20 @@ public class ClienteController {
 	 * @param Dados de entrada do cliente
 	 * @return Dados do cliente persistido
 	 */
+
 	@PostMapping
-	public ResponseEntity<Response<ClienteDto>> salvar(@RequestBody ClienteDto clienteDto) {
+	public ResponseEntity<Response<ClienteDto>> salvar(@Valid @RequestBody ClienteDto clienteDto,
+			BindingResult result) {
 		Response<ClienteDto> response = new Response<ClienteDto>();
 		try {
 			log.info("Controller: salvando o cliente: {}", clienteDto.toString());
+			if (result.hasErrors()) {
+				for (int i = 0; i < result.getErrorCount(); i++) {
+					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
+				}
+				log.info("Controller: Os campos obrigatórios não foram preenchidos");
+				return ResponseEntity.badRequest().body(response);
+			}
 			Cliente cliente = this.clienteService.salvar(ConversaoUtils.Converter(clienteDto));
 			response.setDados(ConversaoUtils.Converter(cliente));
 			return ResponseEntity.ok(response);
