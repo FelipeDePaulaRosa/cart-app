@@ -33,11 +33,7 @@ public class TransacaoRepositoryTest {
 	private TransacaoRepository transacaoRepository;
 
 	private Cliente clienteTeste;
-
-	
 	private Cartao cartaoTeste;
-
-	
 	private Transacao transacaoTeste;
 
 	
