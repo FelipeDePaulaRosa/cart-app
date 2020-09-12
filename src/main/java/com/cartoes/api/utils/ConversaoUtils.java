@@ -90,7 +90,7 @@ public class ConversaoUtils {
 		transacaoDto.setValor(String.valueOf(transacao.getValor()));
 		transacaoDto.setQdtParcelas(String.valueOf(transacao.getQdtParcelas()));
 		transacaoDto.setJuros(String.valueOf(transacao.getJuros()));
-		transacaoDto.setCartaoNumero(transacao.getCartao().getNumero());
+		transacaoDto.setCartaoNumero(String.valueOf(transacao.getCartao().getNumero()));
 		return transacaoDto;
 	}
 

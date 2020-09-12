@@ -39,26 +39,31 @@ public class TransacaoRepositoryTest {
 	
 	private void CriarTransacaoTestes() throws ParseException {	
 		
-		clienteTeste = new Cliente();
+		Cliente clienteTeste = new Cliente();
+
+		clienteTeste.setId(1);
 		clienteTeste.setNome("Nome Teste");
 		clienteTeste.setCpf("05887098082");
 		clienteTeste.setUf("CE");
-		clienteTeste.setDataAtualizacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2020"));
-
-		cartaoTeste = new Cartao();
+		
+		Cartao cartaoTeste = new Cartao();
+		
+		cartaoTeste.setId(1);
 		cartaoTeste.setNumero("1230981203");
-		cartaoTeste.setDataValidade(new SimpleDateFormat("dd/MM/yyyy").parse("01/12/2020"));
 		cartaoTeste.setBloqueado(false);
-		cartaoTeste.setDataAtualizacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2020"));
 		cartaoTeste.setCliente(clienteTeste);
 		
-		transacaoTeste = new Transacao();
-		transacaoTeste.setDataTransacao(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2020"));
+		
+		Transacao transacaoTeste = new Transacao();
+		
+		transacaoTeste.setId(1);
 		transacaoTeste.setCnpj("18808626000194");
 		transacaoTeste.setValor(1500.00);
 		transacaoTeste.setQdtParcelas(3);
 		transacaoTeste.setJuros(0.05);
 		transacaoTeste.setCartao(cartaoTeste);
+		transacaoTeste.setDataTransacao(new SimpleDateFormat("dd/MM/yyyy").parse("15/09/2020"));
+		
 		
 	}
 
