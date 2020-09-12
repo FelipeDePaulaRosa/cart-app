@@ -86,7 +86,7 @@ public class TransacaoControllerTest {
 	
 	@Test
 	@WithMockUser
-	public void testBuscarPorNumeroCartao() throws Exception {
+	public void testBuscarPorNumeroCartaoSucesso() throws Exception {
 
 		List<Transacao> lst = new ArrayList<Transacao>();
 		Transacao transacao = CriarTransacaoTestes();
@@ -105,23 +105,23 @@ public class TransacaoControllerTest {
 			.andExpect(jsonPath("$.dados.[0].qdtParcelas").value(transacao.getQdtParcelas()))
 			.andExpect(jsonPath("$.dados.[0].juros").value(transacao.getJuros()))
 			.andExpect(jsonPath("$.dados.[0].cartaoNumero").value(transacao.getCartao().getNumero()))
+			//.andExpect(jsonPath("$.dados.[0].dataTransacao").value(transacao.getDataTransacao()))
 			.andExpect(jsonPath("$.erros").isEmpty());
 
 	}
-	
 	@Test
-	@WithMockUser
-	public void testBuscarPorNumeroCartaoInconsistencia() throws Exception {
+    @WithMockUser
+    public void testBuscarPorNumeroCartaoInconsistencia() throws Exception {
 
-		BDDMockito.given(transacaoService.buscarPorNumeroCartao((Mockito.anyString())))
-			.willThrow(new ConsistenciaException("Teste inconsistência"));
+        BDDMockito.given(transacaoService.buscarPorNumeroCartao((Mockito.anyString())))
+            .willThrow(new ConsistenciaException("Teste inconsistência"));
 
-		mvc.perform(MockMvcRequestBuilders.get("/api/transacao/cartao/1230981203")
-			.accept(MediaType.APPLICATION_JSON))
-			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.erros").value("Teste inconsistência"));
-	}
-	
+        mvc.perform(MockMvcRequestBuilders.get("/api/transacao/cartao/1230981203")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.erros").value("Teste inconsistência"));
+
+    }
 	@Test
     @WithMockUser
     public void testSalvarSucesso() throws Exception {
@@ -129,12 +129,12 @@ public class TransacaoControllerTest {
         Transacao transacao = CriarTransacaoTestes();
         TransacaoDto objEntrada = ConversaoUtils.Converter(transacao);
         objEntrada.setDataTransacao("01/01/2020");
-
+        
         String json = new ObjectMapper().writeValueAsString(objEntrada);
         BDDMockito.given(transacaoService.salvar(Mockito.any(Transacao.class)))
             .willReturn(transacao);
 
-            mvc.perform(MockMvcRequestBuilders.post("/api/transacao")
+        	mvc.perform(MockMvcRequestBuilders.post("/api/transacao")
             .content(json)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
@@ -148,26 +148,24 @@ public class TransacaoControllerTest {
             .andExpect(jsonPath("$.erros").isEmpty());
 
     }
-	
 	@Test
-	@WithMockUser
-	public void testSalvarInconsistencia() throws Exception {
+    @WithMockUser
+    public void testSalvarInconsistencia() throws Exception {
 
-		Transacao transacao = CriarTransacaoTestes();
+        Transacao transacao = CriarTransacaoTestes();
         TransacaoDto objEntrada = ConversaoUtils.Converter(transacao);
         objEntrada.setDataTransacao("01/01/2020");
 
-		String json = new ObjectMapper().writeValueAsString(objEntrada);
-		
-		BDDMockito.given(transacaoService.salvar(Mockito.any(Transacao.class)))
-			.willThrow(new ConsistenciaException("Teste inconsistência."));
-		
-		mvc.perform(MockMvcRequestBuilders.post("/api/transacao")
-			.content(json)
-			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON))
-			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.erros").value("Teste inconsistência."));
-	}
+        String json = new ObjectMapper().writeValueAsString(objEntrada);
 
+        BDDMockito.given(transacaoService.salvar(Mockito.any(Transacao.class)))
+            .willThrow(new ConsistenciaException("Teste inconsistência."));
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/transacao")
+            .content(json)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.erros").value("Teste inconsistência."));
+    }
 }
