@@ -1,6 +1,7 @@
 package com.cartoes.api.security.filters;
 
 import java.io.IOException;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,13 +13,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import com.cartoes.api.security.utils.JwtTokenUtil;
+import com.cartoes.api.services.UsuarioService;
 
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	private static final String AUTH_HEADER = "Authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
 	@Autowired
 	private UserDetailsService userDetailsService;
+	@Autowired
+	private UsuarioService usuarioService;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
@@ -37,6 +42,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
+				usuarioService.atualizarDataAcesso(username);
 			}
 		}
 		chain.doFilter(request, response);

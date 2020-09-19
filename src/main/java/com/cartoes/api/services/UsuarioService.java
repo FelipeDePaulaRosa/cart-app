@@ -1,6 +1,7 @@
 package com.cartoes.api.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import com.cartoes.api.entities.Regra;
 import com.cartoes.api.entities.Usuario;
@@ -54,28 +56,28 @@ public class UsuarioService {
 
 	public Usuario salvar(Usuario usuario) throws ConsistenciaException {
 		log.info("Service: salvando o usuario: {}", usuario);
-		
+
 // Se foi informando ID na DTO, é porque trata-se de uma ALTERAÇÃO
-		
+
 		if (usuario.getId() > 0) {
-			
+
 // Verificar se o ID existe na base
-			
+
 			Optional<Usuario> usr = buscarPorId(usuario.getId());
-			
+
 // Setando a senha do objeto usuário com a mesma senha encontarda na base.
 // Se não fizermos isso, a senha fica em branco.
-			
+
 			usuario.setSenha(usr.get().getSenha());
 		} else {
-			
+
 // Se NÃO foi informando ID na DTO, é porque trata-se de uma INCLUSÃO
 // Neste caso, podemos setar uma senha incial igual ao CPF (provisória)
-			
+
 			usuario.setSenha(SenhaUtils.gerarHash(usuario.getCpf()));
 		}
 // Carregando as regras definidas para o usuário, caso existam
-		
+
 		if (usuario.getRegras() != null) {
 			List<Regra> aux = new ArrayList<Regra>(usuario.getRegras().size());
 			for (Regra regra : usuario.getRegras()) {
@@ -131,5 +133,18 @@ public class UsuarioService {
 			throw new ConsistenciaException("A senha atual informada não é válida.");
 		}
 		usuarioRepository.alterarSenhaUsuario(SenhaUtils.gerarHash(novaSenha), id);
+	}
+
+	public void atualizarDataAcesso(String username) {
+		Date dataAtual = new Date();
+		usuarioRepository.atualizarData(dataAtual, username);
+	}
+	
+	@Scheduled(fixedRate = 43200000)
+	public void desativaUsuario(){
+		
+		usuarioRepository.desativarUsuariosInativos();
+   		log.info("Service: Desativando usuarios inativos");
+		
 	}
 }

@@ -1,6 +1,7 @@
 package com.cartoes.api.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,17 +19,26 @@ import javax.persistence.JoinColumn;
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
 	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
+	
 	@Column(name = "cpf", nullable = false, length = 11, unique = true)
 	private String cpf;
+	
 	@Column(name = "senha", nullable = false, length = 100)
 	private String senha;
+	
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
+	
+	@Column(name="ultimoAcesso", nullable = false)
+	private Date ultimoAcesso;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "Usuario_Regra", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "regra_id") })
@@ -82,9 +92,17 @@ public class Usuario implements Serializable {
 		this.regras = regras;
 	}
 
+	public Date getUltimoAcesso() {
+		return ultimoAcesso;
+	}
+
+	public void setUltimoAcesso(Date ultimoAcesso) {
+		this.ultimoAcesso = ultimoAcesso;
+	}
+	
 	@Override
 	public String toString() {
 		return "Usuario[id=" + id + "," + "nome=" + nome + "," + "cpf=" + cpf + "," + "senha=" + senha + "," + "ativo="
-				+ ativo + "]";
+				+ ativo + "," + "ultimoAcesso=" + ultimoAcesso + "]";
 	}
 }
